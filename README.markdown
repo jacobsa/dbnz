@@ -33,6 +33,8 @@ immediately.
 Human interface
 ---------------
 
+Here's a crappy sketch:
+
 ![Front panel](https://github.com/jacobsa/dbnz/raw/master/sketches/panel-small.jpg)
 
 The computer's main interface consists of a set of 8 LEDs and a set of 8
