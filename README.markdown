@@ -64,15 +64,13 @@ I believe this machine is Turing-complete, though I haven't proved it. You can
 start with simple subroutines and build up. For example, here is `CLEAR x` (set
 the value at `x` to zero), assuming you return by falling off the end:
 
-    CLEAR x
-    -------
+    // CLEAR x
     A: DBNZ x, A
 
 Here is an unconditional jump:
 
-    GOTO L
-    ------
-    DBNZ 0xF0, L  // 0xF0 is scratch space
+    // GOTO L. 0xF0 is arbitrarily-chosen scratch space, and is destroyed.
+    DBNZ 0xF0, L
     DBNZ 0xF0, L
 
 And so on. You can use the following convention to halt with a particular value
