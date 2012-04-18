@@ -33,6 +33,8 @@ immediately.
 Human interface
 ---------------
 
+![Front panel](/sketches/panel-small.jpg)
+
 The computer's main interface consists of a set of 8 LEDs and a set of 8
 toggle switches, along with a `Set` button, a `Jump` button, and a `Step`
 button. There is an additional toggle switch that allows you to switch between
