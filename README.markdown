@@ -79,10 +79,10 @@ on the LEDs.
  1. Choose a location to hold the return value, say `0xAA`.
  2. End your program with the following snippet located at `0xFD:
 
-     // Cause the return value to be loaded, then jump to 0xFF. Because this
-     // instruction is located two bytes before 0xFF, we will jump there no
-     // matter what the value at 0xAA.
-     DBNZ 0xAA 0xFF
+        // Cause the return value to be loaded, then jump to 0xFF. Because this
+        // instruction is located two bytes before 0xFF, we will jump there no
+        // matter what the value at 0xAA.
+        DBNZ 0xAA 0xFF
 
  3. Compute the return value however you like, storing it at `0xAA`.
  4. Use `GOTO 0xFD` when done.
