@@ -1,5 +1,10 @@
-This is a hobbyist hardware project to design and implement a CPU with a single
-instruction, `DBNZ`, which stands for _Decrement and Branch if Non-Zero_.
+This is a hobbyist hardware project to design and physically build a computer
+with a single instruction, `DBNZ`, which stands for _Decrement and Branch if
+Non-Zero_. The computer has a dead-simple interface inspired by the
+[Altair 8800][altair], and is built from discrete logic ICs (the only thing more
+complicated being an SRAM chip).
+
+[altair]: http://en.wikipedia.org/wiki/Altair_8800
 
 
 Architecture
@@ -21,8 +26,8 @@ first byte is located after the second byte of the present instruction).
 The computer has a register called `PC` which holds the location of the
 instruction byte currently being processed (the first or the second byte of the
 instruction), and a register called `VAL` that holds the value being
-decremented, pre- and post-decrement. If `PC` is ever equal to `0xFF`, the
-computer halts immediately.
+decremented, pre-decrement. If `PC` is ever equal to `0xFF`, the computer halts
+immediately.
 
 
 Human interface
@@ -50,3 +55,36 @@ If you want to step through the program more slowly, setting the
 button. The computer will wait for this button after each instruction is
 executed. In this mode, as in program mode, you can use the toggle switches and
 the `Jump` button to jump around in memory.
+
+
+Programming
+-----------
+
+I believe this machine is Turing-complete, though I haven't proved it. You can
+start with simple subroutines and build up. For example, here is `CLEAR x` (set
+the value at `x` to zero), assuming you return by falling off the end:
+
+    CLEAR x
+    -------
+    A: DBNZ x, A
+
+Here is an unconditional jump:
+
+    GOTO L
+    ------
+    DBNZ 0xF0, L  // 0xF0 is scratch space
+    DBNZ 0xF0, L
+
+And so on. You can use the following convention to halt with a particular value
+on the LEDs.
+
+ 1. Choose a location to hold the return value, say `0xAA`.
+ 2. End your program with the following snippet located at `0xFD:
+
+     // Cause the return value to be loaded, then jump to 0xFF. Because this
+     // instruction is located two bytes before 0xFF, we will jump there no
+     // matter what the value at 0xAA.
+     DBNZ 0xAA 0xFF
+
+ 3. Compute the return value however you like, storing it at `0xAA`.
+ 4. Use `GOTO 0xFD` when done.
